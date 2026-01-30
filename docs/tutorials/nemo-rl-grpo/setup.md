@@ -12,10 +12,11 @@ Now that you understand the configuration parameters for GRPO training, it's tim
 
 **In this section, you will**:
 
-1. Launch an interactive GPU session
-2. Clone and install NeMo RL and NeMo Gym
-3. Run sanity tests to validate the setup
-4. Prepare the Workplace Assistant dataset
+1. Configure NGC authentication
+2. Launch an interactive GPU session
+3. Clone and install NeMo RL and NeMo Gym
+4. Run sanity tests to validate the setup
+5. Prepare the Workplace Assistant dataset
 
 :::
 
@@ -39,7 +40,7 @@ Make sure you have:
 
 ---
 
-## Configure NGC Authentication
+## 0. Configure NGC Authentication
 
 **Estimated time**: ~5 minutes
 
