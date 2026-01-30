@@ -12,10 +12,11 @@ Now that you understand the configuration parameters for GRPO training, it's tim
 
 **In this section, you will**:
 
-1. Launch an interactive GPU session
-2. Clone and install NeMo RL and NeMo Gym
-3. Run sanity tests to validate the setup
-4. Prepare the Workplace Assistant dataset
+1. Configure NGC authentication
+2. Launch an interactive GPU session
+3. Clone and install NeMo RL and NeMo Gym
+4. Run sanity tests to validate the setup
+5. Prepare the Workplace Assistant dataset
 
 :::
 
@@ -36,6 +37,79 @@ Make sure you have:
 - ✅ Access to a Slurm cluster with GPU nodes
 - ✅ A shared filesystem accessible from all nodes
 - ✅ HuggingFace token for downloading models
+
+---
+
+## 0. Configure NGC Authentication
+
+**Estimated time**: ~5 minutes
+
+Before you can pull the NeMo RL container from NVIDIA GPU Cloud (NGC), you need to authenticate with NGC. The container is hosted on `nvcr.io` and requires valid credentials to access.
+
+### Obtain an NGC API Key
+
+1. Navigate to the [NGC API Key setup page](https://org.ngc.nvidia.com/setup/api-keys).
+
+2. Sign in with your NVIDIA account credentials.
+
+3. Click **Generate API Key** to create a new key.
+
+4. Copy the generated API key and store it securely. You'll need this key for authentication.
+
+:::{warning}
+Treat your API key like a password. Do not share it or commit it to version control.
+:::
+
+### Authenticate with Docker
+
+If you're using Docker as your containerization framework:
+
+1. Log in to the NGC container registry:
+
+   ```bash
+   docker login nvcr.io
+   ```
+
+2. When prompted, enter the following credentials:
+   - **Username**: `$oauthtoken`
+   - **Password**: Your NGC API key
+
+**✅ Success Check**: You should see "Login Succeeded" after entering your credentials.
+
+### Authenticate with Enroot
+
+If you're using enroot as your containerization framework:
+
+1. Create or edit your `.credentials` file in your home directory:
+
+   ```bash
+   mkdir -p ~/.config/enroot
+   ```
+
+2. Add your NGC credentials to the file:
+
+   ```bash
+   cat << EOF >> ~/.config/enroot/.credentials
+   machine nvcr.io login \$oauthtoken password <YOUR_NGC_API_KEY>
+   EOF
+   ```
+
+   Replace `<YOUR_NGC_API_KEY>` with your actual API key.
+
+3. Set appropriate permissions:
+
+   ```bash
+   chmod 600 ~/.config/enroot/.credentials
+   ```
+
+**✅ Success Check**: The credentials file should exist at `~/.config/enroot/.credentials` with restricted permissions.
+
+:::{tip}
+If you encounter authentication errors when pulling containers, verify that:
+- Your API key is valid and hasn't expired
+- You're using `$oauthtoken` as the username (not your email)
+- The credentials file has the correct permissions (600)
+:::
 
 ---
 
